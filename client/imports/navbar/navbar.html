@@ -1,0 +1,33 @@
+<nav class="navbar navbar-fixed-top navbar-default">
+	<div class="container">
+	  <ul class="nav navbar-nav">
+	    <li class="nav-item" [ngClass]="{active: isActive(['/Home'])}">
+	      <a class="nav-link" [routerLink]="['/Home']">Home <span class="sr-only">(current)</span></a>
+	    </li>
+	    <li class="nav-item" [ngClass]="{active: isActive(['/ProjectsList'])}" *ngIf="user">
+	      <a class="nav-link" [routerLink]="['/ProjectsList']">My Projects <span class="sr-only">(current)</span></a>
+	    </li>
+	    
+	  </ul>
+	  <ul class="nav navbar-nav">
+	    <li class="nav-item">
+	      <a class="nav-link">
+	      	<login-buttons></login-buttons>
+	      </a>
+	    </li>
+	    <li class="nav-item" [ngClass]="{active: isActive(['/MyAccount'])}" *ngIf="user">
+	      <a class="nav-link" [routerLink]="['/MyAccount']">
+	      	My Account
+	      </a>
+	    </li>
+	  </ul>
+	  <ul class="nav navbar-nav navbar-right">
+	  	<li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Themes<span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+	      	<li *ngFor="let theme of themes" [ngClass]="{active: getActiveTheme() === theme.name}"><a (click)="changeTheme(theme)">{{theme.name}}</a></li>
+	      </ul>
+	    </li>
+	  </ul>
+  </div>
+</nav>

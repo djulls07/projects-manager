@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default projectNav" *ngIf="project">
+	<div class="container-fluid">
+	  <ul class="nav navbar-nav">
+	  	<li [ngClass]="{active: isActive('project\/[a-zA-Z0-9]+\/details$')}"><a [routerLink]="['/ProjectDetails', {projectId: params.get('projectId')}]">Project: '{{project.name}}'</a></li>
+	  	<li class="dropdown" [ngClass]="{active: isActive('project\/(.+)\/users')}">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+	        <li [ngClass]="{active: isActive('project\/(.+)\/users\/details')}">
+			      <a class="" [routerLink]="['/ProjectUsersDetails', {projectId: params.get('projectId')}]">List<span class="sr-only">(current)</span></a>
+			    </li>
+			     <li class="" [ngClass]="{active: isActive('project\/(.+)\/users\/groups')}">
+			      <a class="" [routerLink]="['/GroupsList', {projectId: params.get('projectId')}]">Groups<span class="sr-only">(current)</span></a>
+			    </li>
+	      </ul>
+	    </li>
+	    <li class="dropdown" [ngClass]="{active: isActive('task')}">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tasks <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+	        <li class="" [ngClass]="{active: isActive('tasks\/list$')}">
+			      <a class="" [routerLink]="['/TasksList', {projectId: params.get('projectId')}]">All active tasks<span class="sr-only">(current)</span></a>
+			    </li>
+	        <li [ngClass]="{active: isActive('tasks.+list.+working')}">
+	        	<a [routerLink]="['WorkingTasksList', {projectId: params.get('projectId')}]">Tasks i am working on</a>
+	        </li>
+	        <li [ngClass]="{active: isActive('tasks.+list.+mine')}">
+	        	<a [routerLink]="['/MyTasksList', {projectId: params.get('projectId')}]">Tasks i own</a>
+	        </li>
+	        <li [ngClass]="{active: isActive('tasks.+archived')}">
+	        	<a [routerLink]="['/ArchivedTasksList', {projectId: params.get('projectId')}]">Tasks archived</a>
+	        </li>
+	        <li role="separator" class="divider"></li>
+	        <li [ngClass]="{active: isActive('task\/add')}">
+	        	<a [routerLink]="['/TaskForm', {projectId: params.get('projectId')}]">Add task</a>
+	        </li>
+	      </ul>
+	    </li>
+	  </ul>
+	  <ul class="nav navbar-nav navbar-right">
+	  	<li>
+	      <a href="#" (click)="back()">Previous page</a>
+	    </li>
+	  </ul>
+	 </div>
+</nav>

@@ -1,0 +1,6 @@
+<form [ngFormModel]="projectForm" #f="ngForm" (submit)="addProject(f.value)">
+	<div class="form-group"> 
+	  <label>Name</label>
+	  <input class="form-control" type="text" ngControl="name">
+	</div>
+</form>

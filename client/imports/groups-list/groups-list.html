@@ -1,0 +1,49 @@
+<style>
+	.trashGroup {
+		font-size: 0.7em;
+	}
+</style>
+<div class="container" *ngIf="project">
+	<header>
+		<project-nav></project-nav>
+		<h1 class="page-header">Groups of users</h1>
+	</header>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>
+							Users / Groups
+						</th>
+						<th *ngFor="let group of project.groups">
+							{{group.name}}
+							<a><span class="trashGroup glyphicon glyphicon-trash" (click)="removeGroup(group)"></span></a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let user of project.users">
+						<td>{{user.email}}</td>
+						<td *ngFor="let group of project.groups" class="pointer" (click)="addRemoveUserToGroup(group, user)">
+							<a>
+								<span *ngIf="isInProjectGroup(group, user)">
+									Yes
+								</span>
+								<span *ngIf="!isInProjectGroup(group, user)">
+									No
+								</span>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<form [ngFormModel]="groupForm" #ff="ngForm" (submit)="addGroup(ff.value)">
+				<div class="form-group"> 
+				  <label>Add group by name</label>
+				  <input class="form-control" type="text" ngControl="name">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

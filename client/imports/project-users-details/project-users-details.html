@@ -1,0 +1,46 @@
+<div class="container" *ngIf="project">
+	<header>
+		<project-nav></project-nav>
+		<h1 class="page-header">Users</h1>
+	</header>
+	<div class="row">
+		<div class="col-md-12">
+			<input type="checkbox" [(ngModel)]="includeSubTasks" (click)="changeShowSub()">
+			Include sub tasks
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Email</th>
+						<th>Completed tasks</th>
+						<th>Validated tasks</th>
+						<th>Total actives tasks</th>
+						<th>Archived tasks</th>
+						<th>Working on</th>
+						<th>Has completed</th>
+						<th>Has validated</th>
+						<th>Has archived</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let detail of detailsUser">
+						<td>{{detail.email}}</td>
+						<td>{{detail.tasks.active.completed}}</td>
+						<td>{{detail.tasks.active.validated}}</td>
+						<td>{{detail.tasks.active.total}}</td>
+						<td>{{detail.tasks.archived}}</td>
+						<td>{{detail.tasks.working}}</td>
+						<td>{{detail.tasks.completor}}</td>
+						<td>{{detail.tasks.validator}}</td>
+						<td>{{detail.tasks.archivor}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<form [ngFormModel]="userForm" #f="ngForm" (submit)="addUser(f.value)">
+				<div class="form-group"> 
+				  <label>Add user by email</label>
+				  <input class="form-control" type="text" ngControl="email">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

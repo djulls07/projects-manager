@@ -1,0 +1,22 @@
+<div class="container">
+	<header>
+		<h1 class="page-header">My Account</h1>
+	</header>
+
+	<h2>Change password</h2>
+	<form [ngFormModel]="passForm" #f="ngForm" (submit)="changePass(f.value)">
+		<div class="form-group"> 
+		  <label>Actual password</label>
+		  <input class="form-control" type="password" ngControl="oldPassword">
+		</div>
+		<div class="form-group"> 
+		  <label>New password</label>
+		  <input class="form-control" type="password" ngControl="password">
+		</div>
+		<div class="form-group"> 
+		  <label>Repeat new password</label>
+		  <input class="form-control" type="password" ngControl="password2">
+		</div>
+		<button class="btn btn-primary">Change my password</button>
+	</form>
+</div>

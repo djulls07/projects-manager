@@ -1,0 +1,59 @@
+
+<div class="container">
+	<project-nav></project-nav>
+	<header class="row">
+		<div class="col-md-12">
+			<h1 class="page-header">Tasks i am working on</h1>
+		</div>
+	</header>
+	
+	<div class="row">
+		<div class="col-md-12" *ngIf="tasks">
+			<div class="row">
+				<div class="col-md-3">
+					<input type="text" placeholder="Search" class="form-control" [(ngModel)]="searchModel" (keyup)="triggerSearch()" />
+				</div>
+				<div class="col-md-3">
+					<div class="checkbox">
+					  <label><input type="checkbox" [(ngModel)]="showSubModel" (click)="changeShowSub()" value="">Include sub tasks</label>
+					</div>
+				</div>
+			</div>
+			<table class="table table-striped" *ngIf="tasks.count()">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Owner</th>
+						<th>Targets</th>
+						<th>Files</th>
+						<th>Priority</th>
+						<th>Due date</th>
+						<th>Created</th>
+						<th>Completed</th>
+						<th>Sub tasks</th>
+						<th>Is sub tasks</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="pointer" *ngFor="let task of tasks" [routerLink]="['/TaskDetails', {projectId: task.project, taskId: task._id}]">
+						<td>{{task.name}}</td>
+						<td>{{task.ownerEmail}}</td>
+						<td>
+							<small *ngFor="let userTask of task.targets">
+								{{userTask.email}}<br />
+							</small>
+						</td>
+						<td>{{task.files.length}}</td>
+						<td>{{task.priority}}</td>
+						<td>{{task.dueDate | date}}</td>
+						<td>{{task.createdAt | date}}</td>
+						<td>{{task.completed}}</td>
+						<td>{{task.subTasks.length}}</td>
+						<td>{{task.isSubTask}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<p *ngIf="!tasks.count()">No tasks yet, add one with the form in the task menu</p>
+		</div>
+	</div>
+</div>

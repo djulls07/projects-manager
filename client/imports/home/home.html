@@ -1,0 +1,8 @@
+<div class="container">
+	<div *ngIf="user">
+		<a [routerLink]="['/ProjectsList']">My projects</a>
+	</div>
+	<div *ngIf="!user">
+		<p>Please loggin or create account</p>
+	</div>
+</div>

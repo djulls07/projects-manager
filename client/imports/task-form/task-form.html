@@ -1,0 +1,91 @@
+<style>
+	label {
+		font-weight: bold;
+	}
+</style>
+<div [ngClass]="{container: !parentTaskId}">
+	<header *ngIf="!parentTaskId">
+		<project-nav></project-nav>
+		<h1 class="page-header">Add task</h1>
+	</header>
+
+	<header *ngIf="parentTaskId">
+		<h4 class="page-header">Add sub task</h4>
+	</header>
+	
+	<form [ngFormModel]="taskForm" #f="ngForm" (submit)="addTask(f.value)" enctype="multipart/form-data">
+		<div class="form-group"> 
+		  <label>Name</label>
+		  <input class="form-control" type="text" ngControl="name">
+		</div>
+		<div class="form-group">
+			<label>Priority</label>
+			<select class="form-control" ngControl="priority">
+				<option value="low">Low</option>
+				<option value="normal">Normal</option>
+				<option value="high">High</option>
+			</select>
+		</div>
+		<div *ngIf="project">
+			<ul class="nav nav-pills">
+			  <li (click)="tabsTargets='users'" [ngClass]="{active: tabsTargets === 'users'}">
+			 	 <a>Attribute to users</a>
+			  </li>
+			  <li (click)="tabsTargets='groups'" [ngClass]="{active: tabsTargets === 'groups'}">
+			  	<a>Attribute to groups</a>
+			  </li>
+			</ul>
+			<hr >
+			<div *ngIf="tabsTargets === 'users'">
+				<label>User(s) on task</label>
+				<div class="form-group" *ngFor="let user of project.users">
+					<input [(ngModel)]="selected[user.userId]" type="checkbox" />&nbsp;{{user.email}}
+				</div>
+			</div>
+			<div *ngIf="tabsTargets === 'groups'">
+				<label>Group(s) on task</label>
+				<div class="form-group" *ngFor="let group of project.groups">
+					<input [(ngModel)]="selectedGroups[group.name]" type="checkbox" />&nbsp;{{group.name}}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Notify targets ?</label>
+			<br />
+			<input type="checkbox" [(ngModel)]="notifyTargets" >
+		</div>
+		<div class="form-group">
+			<label>Due date</label>
+			<input class="form-control" placeholder="Only valid format is: dd/mm/yyyy hh:mm" type="datetime-local" ngControl="dueDate" />
+		</div>
+		<div class="form-group">
+			<label>Description</label>
+			<textarea class="form-control" ngControl="description"></textarea>
+		</div>
+		<div class="form-group">
+			<table class="table table-condensed table-striped" *ngIf="tmpFiles && tmpFiles.length">
+				<thead>
+					<tr>
+						<th>Filename</th>
+						<th>Size</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let file of tmpFiles">
+						<td>
+							{{file.name}}
+						</td>
+						<td>
+							{{file.size}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p *ngIf="!tmpFiles || !tmpFiles.length">
+				No files uploaded yet.
+			</p>
+			<uploader [list]="tmpFiles"></uploader>
+		</div>
+		<button type="submit" class="btn btn-primary">Save</button>
+	</form>
+</div>
