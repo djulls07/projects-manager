@@ -12,6 +12,7 @@ import { FormBuilder, ControlGroup, Validators, Control } from '@angular/common'
 import { Modal} from '../modal/modal';
 import { TaskForm } from '../task-form/task-form';
 import { ScrollBottom } from '../scroll-bottom/scroll-bottom';
+import { Projects } from '../../../collections/projects';
 
 @Component({
 	selector: 'task-details',
@@ -27,6 +28,7 @@ export class TaskDetails extends MeteorComponent {
 	addSubTask: boolean = false;
 	self: any;
 	files: Mongo.Cursor<MyFile>;
+	project: Project;
 
 	constructor(params: RouteParams, private modal: Modal, private location: Location) {
 		super();
@@ -40,12 +42,16 @@ export class TaskDetails extends MeteorComponent {
 
 		let fb = new FormBuilder();
 		this.messageForm = fb.group({
-			message: ['', Validators.required, Validators.compose([Validators.minLength(3), Validators.maxLength(1024)])]
+			message: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(1024)])]
 		});
 
 		this.subscribe('taskFiles', params.get('taskId'), () => {
 			this.files = MyFiles.find({});
 			console.log('files', this.files.count());
+		}, true);
+
+		this.subscribe('project', params.get('projectId'), () => {
+			this.project = Projects.findOne(params.get('projectId'));
 		}, true);
 	}
 
@@ -66,8 +72,10 @@ export class TaskDetails extends MeteorComponent {
 	archiveTask() {
 		Meteor.call('archiveTask', this.task._id);
 	}
+	// owner the task or project
 	isOwner() {
-		return Meteor.userId() === this.task.owner;
+		let userId = Meteor.userId();
+		return (userId === this.task.owner || this.project.owner === userId);
 	}
 	hideFormSubTask(args?: Array<any>) {
 		this.addSubTask = false;

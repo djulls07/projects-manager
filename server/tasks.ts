@@ -69,44 +69,20 @@ Meteor.publish('tasksWorkingOn', function(projectId: string, querySubTasks: bool
 	return Tasks.find(q);
 });
 
-Meteor.publish('task', function(taskId: string) {
+Meteor.publish('taskAndSubTasks', function(taskId: string) {
 	let task = Tasks.findOne(taskId);
 	let project = Projects.findOne(task.project);
 	let auth = false;
-	let q = {};
-	q['_id'] = taskId;
+	let q = {'$or': []};
 	for (let i = 0; i < project.users.length; i++) {
 		if (project.users[i].userId === this.userId) {
 			auth = true;
 			break;
 		}
 	}
-	if (!auth) {
-		q['$or'] = [
-			{ owner: this.userId },
-			{ 'targets.userId': this.userId }
-		];
+	q['$or'].push({ _id: taskId });
+	q['$or'].push({ parentTask: taskId });
+	if (auth) {
+		return Tasks.find(q);
 	}
-	return Tasks.find(q);
-});
-
-Meteor.publish('taskAndSubTasks', function(taskId: string) {
-	return Tasks.find({
-		$or: [
-			{
-				_id: taskId,
-				$or: [
-					{ owner: this.userId },
-					{ 'targets.userId': this.userId }
-				]
-			},
-			{
-				parentTask: taskId,
-				$or: [
-					{ owner: this.userId },
-					{ 'targets.userId': this.userId }
-				]
-			}
-		]
-	});
 });

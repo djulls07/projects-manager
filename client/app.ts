@@ -22,6 +22,7 @@ import { Theme } from './imports/theme/theme';
 import { GroupsList } from './imports/groups-list/groups-list';
 import { ProjectUsersDetails } from './imports/project-users-details/project-users-details';
 import { MyAccount } from './imports/my-account/my-account';
+import { FilesList } from './imports/files-list/files-list';
 
 Meteor.startup(function() {
   console.log('startup, getting external scripts');
@@ -46,7 +47,8 @@ Meteor.startup(function() {
   { path: '/project/:projectId/tasks/list/mine', name: 'MyTasksList', component: MyTasksList },
   { path: '/project/:projectId/tasks/list/working', name: 'WorkingTasksList', component: WorkingTasksList },
   { path: '/project/:projectId/tasks/list/archived', name: 'ArchivedTasksList', component: ArchivedTasksList },
-  { path: '/project/:projectId/task/:taskId/details', name: 'TaskDetails', component: TaskDetails }
+  { path: '/project/:projectId/task/:taskId/details', name: 'TaskDetails', component: TaskDetails },
+  { path: '/project/:projectId/files/list', name: 'FilesList', component: FilesList }
 ])
 class ProjectsManager {
   constructor(themeService: Theme) {

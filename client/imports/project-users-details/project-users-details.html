@@ -5,7 +5,10 @@
 	</header>
 	<div class="row">
 		<div class="col-md-12">
-			<input type="checkbox" [(ngModel)]="includeSubTasks" (click)="changeShowSub()">
+			<div class="checkbox">
+				<label><input type="checkbox" [(ngModel)]="includeSubTasks" (click)="changeShowSub()">Include sub tasks</label>
+			</div>
+			
 			Include sub tasks
 			<table class="table table-striped">
 				<thead>

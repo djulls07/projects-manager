@@ -147,8 +147,15 @@ Meteor.methods({
 		let user = Meteor.user();
 		let task = Tasks.findOne(taskId);
 		let c = compt || 0;
-		if (!user || !task || task.owner !== user._id) {
+		if (!user || !task) {
 			throw new Meteor.Error('not-authorized');
+		}
+		let project = Projects.findOne(task.project);
+		if (!project) {
+			throw new Meteor.Error('404', 'project-not-found');
+		}
+		if (task.owner !== user._id && project.owner !== user._id) {
+			throw new Meteor.Error('403', 'not-authorized');
 		}
 		Tasks.update(taskId, {
 			$set: {
@@ -196,6 +203,10 @@ Meteor.methods({
 		if (!user || !task) {
 			throw new Meteor.Error('not-authorized');
 		}
+		let project = Projects.findOne(task.project);
+		if (!project) {
+			throw new Meteor.Error('404', 'project-not-found');
+		}
 		task.targets.forEach((target) => {
 			if (target.userId === user._id) {
 				auth = true;
@@ -204,6 +215,10 @@ Meteor.methods({
 		if (task.owner === user._id) {
 			auth = true;
 		}
+		if (user._id === project.owner) {
+			auth = true;
+		}
+
 		if (!auth) {
 			throw new Meteor.Error('not-authorized');
 		}
@@ -249,7 +264,14 @@ Meteor.methods({
 		if (!user || !task) {
 			throw new Meteor.Error('not-authorized');
 		}
+		let project = Projects.findOne(task.project);
+		if (!project) {
+			throw new Meteor.Error('404', 'project-not-found');
+		}
 		if (task.owner === user._id) {
+			auth = true;
+		}
+		if (user._id === project.owner) {
 			auth = true;
 		}
 		if (!auth) {

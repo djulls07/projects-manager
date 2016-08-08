@@ -34,6 +34,14 @@
 	        </li>
 	      </ul>
 	    </li>
+	    <li class="dropdown" [ngClass]="{active: isActive('files')}">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Files <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+	        <li class="" [ngClass]="{active: isActive('files\/list$')}">
+			    <a class="" [routerLink]="['/FilesList', {projectId: params.get('projectId')}]">All project files<span class="sr-only">(current)</span></a>
+			</li>
+	      </ul>
+	    </li>
 	  </ul>
 	  <ul class="nav navbar-nav navbar-right">
 	  	<li>

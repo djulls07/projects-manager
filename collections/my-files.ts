@@ -81,16 +81,21 @@ export function linkFilesModel(projectId: string, modelName: string, modelId: st
 		ret = false; // not linking files will result in their removing
 	}
 	if (ret) {
-		MyFiles.update({
+		console.log('files ids', filesIds);
+		MyFiles.update(
+		{
 			_id: { $in: filesIds }
 		},
-			{
-				$set: {
-					modelName: modelName,
-					modelId: modelId,
-					projectId: projectId
-				}
+		{
+			$set: {
+				modelName: modelName,
+				modelId: modelId,
+				projectId: projectId
 			}
+		},
+		{
+			multi: true
+		}
 		);
 	}
 	return ret;

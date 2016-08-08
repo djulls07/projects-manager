@@ -1,0 +1,36 @@
+<div class="container">
+	<header>
+		<project-nav></project-nav>
+		<h1 class="page-header">File list</h1>
+	</header>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Size</th>
+						<th>Owner</th>
+						<th>Linked to</th>
+						<th>Uloaded</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let file of files">
+						<td>
+							<a [href]="file.url" download="{{file.name}}">
+								{{file.name}}
+							</a>
+						</td>
+						<td>{{file.extension}}</td>
+						<td>{{file.size | filesize}} MB</td>
+						<td>{{file.userEmail}}</td>
+						<td>{{file.modelName || 'none'}}</td>
+						<td>{{file.uploadedAt | date}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

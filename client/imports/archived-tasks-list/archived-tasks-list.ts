@@ -26,8 +26,10 @@ export class ArchivedTasksList extends MeteorComponent {
 	constructor(private params: RouteParams) {
 		super();
 		this.subscribe('tasksArchived', params.get('projectId'), this.showSub.get(), this.search.get(), () => {
-			this.tasks = Tasks.find({}, { sort: { dueDate: -1 } });
-		}, true);
+			this.autorun(() => {
+				this.tasks = Tasks.find({}, { sort: { dueDate: -1 } });
+			}, true);
+		});
 	}
 
 	removeTask(taskId: string) {

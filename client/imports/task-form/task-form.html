@@ -3,17 +3,17 @@
 		font-weight: bold;
 	}
 </style>
-<div [ngClass]="{container: !parentTaskId}">
+<div [ngClass]="{'container': !parentTaskId}">
 	<header *ngIf="!parentTaskId">
 		<project-nav></project-nav>
-		<h1 class="page-header">Add task</h1>
+		<h1 class="page-header" [ngClass]="{'col-md-6 col-md-offset-3': !parentTaskId}">Add task</h1>
 	</header>
 
 	<header *ngIf="parentTaskId">
-		<h4 class="page-header">Add sub task</h4>
+		<h2 class="page-header">Add sub task</h2>
 	</header>
 	
-	<form [ngFormModel]="taskForm" #f="ngForm" (submit)="addTask(f.value)" enctype="multipart/form-data">
+	<form [ngFormModel]="taskForm" #f="ngForm" (submit)="addTask(f.value)" enctype="multipart/form-data" [ngClass]="{'col-md-6 col-md-offset-3': !parentTaskId}">
 		<div class="form-group"> 
 		  <label>Name</label>
 		  <input class="form-control" type="text" ngControl="name">

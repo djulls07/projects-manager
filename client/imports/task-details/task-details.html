@@ -71,7 +71,7 @@
 				<tbody>
 					<tr *ngFor="let file of files">
 						<td>
-							<a [href]="file.url" download="download">{{file.name}}</a>
+							<a [href]="file.url" download="{{file.name}}">{{file.name}}</a>
 						</td>
 						<td>{{file.size}}</td>
 						<td>{{file.extension}}</td>
@@ -151,8 +151,10 @@
 			<p *ngIf="!subTasks || !subTasks.count()">No sub tasks yet, add one with the subtask form</p>
 			<a *ngIf="!addSubTask" (click)="addSubTask = true" class="pointer">Show sub task form</a>
 			<a *ngIf="addSubTask" (click)="addSubTask = false" class="pointer">Hide sub task form</a>
-			<div *ngIf="addSubTask">
-				<task-form [callback]="[hideFormSubTask, self, []]" [parentTask]="task"></task-form>
+			<div *ngIf="addSubTask" class="row">
+				<div class="col-md-6">
+					<task-form [callback]="[hideFormSubTask, self, []]" [parentTask]="task"></task-form>
+				</div>
 			</div>
 		</div>
 	</div>
